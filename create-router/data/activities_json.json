@@ -1,0 +1,24 @@
+{
+  "activities": [
+      {
+        "act_type": "ambush",
+        "act_time": "datetime",
+        "po_list": ["list_of_user_ids"],
+        "act_goal": "catch the robber",
+        "act_id": "321",
+        "status": "live",
+        "act_approver": "user_id",
+        "act_loc": "location"
+      },
+      {
+       "act_type": "roadblock",
+       "act_time": "datetime",
+       "po_list": ["list_of_user_ids"],
+       "act_goal": "find drugs",
+       "act_id": "321",
+       "status": "finished",
+       "act_approver": "user_id",
+       "act_loc": "location"
+      }
+    ]
+}

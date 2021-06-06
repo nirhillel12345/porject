@@ -1,0 +1,16 @@
+{
+  "accident_reports": [
+      {
+        "hitter_id": "123123123",
+        "hit_id": "987654321",
+        "casualties_num": "2",
+        "report_id": "2"
+      },
+      {
+        "hitter_id": "123333123",
+        "hit_id": "323321321",
+        "casualties_num": "3",
+        "report_id": "7"
+      }
+    ]
+}
