@@ -4,14 +4,10 @@
   </div>
 </template>
 <script>
-import Map from "./components/Map";
 
 export default {
-  name: "App",
-  components: {
-    Map,
-  },
-};
+  name: 'App',
+}
 </script>
 <style>
 #app {
