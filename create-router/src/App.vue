@@ -1,20 +1,19 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 <script>
-import Map from './components/Map';
+import Map from "./components/Map";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Map
-  }
-}
+    Map,
+  },
+};
 </script>
 <style>
 #app {
-  
 }
 </style>

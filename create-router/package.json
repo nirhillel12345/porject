@@ -17,6 +17,7 @@
     "react": "^17.0.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vue2-datepicker": "^3.9.1",
     "vue2-leaflet": "^2.7.0"
   },
   "devDependencies": {
