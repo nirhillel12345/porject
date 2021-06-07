@@ -1,21 +1,23 @@
 <template>
-  <div class="map">
-    <select class="dropdown" v-model="selected" @change="changeArea">
-      <option disabled value="">אנא בחר איזור</option>
-      <option v-for="area in areaList" :key="area.name">{{ area.name }}</option>
-    </select>
-    <LMap :zoom="zoom" :center="center">
-      <LTileLayer :url="url"></LTileLayer>
-      <l-marker :lat-lng="[40.731810,-73.936542]">
-          <l-popup>{{this.displayText}}</l-popup>
-      </l-marker>
-      <LMarker :lat-lng="[40.730620,-73.934250]">
-          <l-popup class="popup">{{this.displayText}}</l-popup>
-      </LMarker>
-      <LMarker :lat-lng="[40.730529,-73.935949]">
-          <l-popup class="popup">{{this.displayText}}</l-popup>
-      </LMarker>
-    </LMap>
+  <div class="background">
+    <div class="map">
+      <select class="dropdown" v-model="selected" @change="changeArea">
+        <option disabled value="">אנא בחר איזור</option>
+        <option v-for="area in areaList" :key="area.name">{{ area.name }}</option>
+      </select>
+      <LMap :zoom="zoom" :center="center">
+        <LTileLayer :url="url"></LTileLayer>
+        <l-marker :lat-lng="[40.731810,-73.936542]">
+            <l-popup>{{this.displayText}}</l-popup>
+        </l-marker>
+        <LMarker :lat-lng="[40.730620,-73.934250]">
+            <l-popup class="popup">{{this.displayText}}</l-popup>
+        </LMarker>
+        <LMarker :lat-lng="[40.730529,-73.935949]">
+            <l-popup class="popup">{{this.displayText}}</l-popup>
+        </LMarker>
+      </LMap>
+    </div>
   </div>
 </template>
 
@@ -85,13 +87,8 @@ export default {
 
 <style scoped>
 .map {
-  height: 50vh;
-  width: 50vh;
+  height: 85vh;
   direction: rtl;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 .dropdown {
     margin-bottom: 2vh;

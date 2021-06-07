@@ -67,13 +67,9 @@ export default {
 
 <style scoped>
 .map {
-  height: 50vh;
-  width: 75vw;
   direction: rtl;
-  position: fixed;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 85vh;
+  width: "100%";
 }
 .dropdown {
     margin-bottom: 2vh;
