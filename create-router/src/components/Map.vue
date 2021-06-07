@@ -20,7 +20,7 @@
 
 <script>
 import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
-import { eventPopUp } from "../components/eventPopUp"
+import { eventPopUp } from "../components/eventPopUp.vue"
 import { reports } from "../../data/reports_json.json";
 
 export default {
