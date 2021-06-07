@@ -9,6 +9,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "node-sass": "^6.0.0",
+    "sass-loader": "^12.0.0",
+    "vue-material": "^1.0.0-beta-15",
+    "vuelidate": "^0.7.6",
     "@ant-design/icons": "^4.6.2",
     "@mdi/js": "^5.9.55",
     "ant-design-vue": "^1.7.5",
