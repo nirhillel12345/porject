@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    
+    <Map name=""></Map>    
     <router-view/>
-    <Map name=""></Map>
   </div>
 </template>
 <script>

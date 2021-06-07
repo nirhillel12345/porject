@@ -3,14 +3,9 @@
     <LMap :zoom="zoom" :center="center">
       <LTileLayer :url="url"></LTileLayer>
       <LMarker :lat-lng="[40.731810,-73.936542]">
-          <l-icon
-          :icon-anchor="staticAnchor"
-          class-name="someExtraClass"
-          @click="popUpShow = true"
-        >
-        <eventPopUp v-show="popUpShow" v-bind="events[0]" v-on:closePopUp="popUpShow = false" ></eventPopUp>
-          <img src="map-service/src/assets/running_man.png">
-        </l-icon>
+        
+        <!-- <eventPopUp v-show="popUpShow" v-bind="events[0]" v-on:closePopUp="popUpShow = false" ></eventPopUp> -->
+         
       </LMarker>
       <LMarker :lat-lng="[40.730620,-73.934250]"></LMarker>
       <LMarker :lat-lng="[40.730529,-73.935949]"></LMarker>
@@ -19,7 +14,7 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 import eventPopUp from "../components/eventPopUp"
 import reports from "../../data/reports_json.json";
 
@@ -29,7 +24,6 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LIcon,
     eventPopUp,
   },
   data() {
