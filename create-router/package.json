@@ -1,8 +1,7 @@
 {
-  "name": "nir",
+  "name": "map3-service",
   "version": "1.0.0",
-  "description": "rout-proj",
-  "author": "nir",
+  "description": "map3-service",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
