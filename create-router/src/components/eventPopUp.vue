@@ -1,9 +1,9 @@
 <template>
     <div>
-    <vue-modaltor :visible="open" @hide="open=false">
+    <vue-modaltor>
       <template #header>
         <div>
-          <i class="closeicon" @click="open = false">x</i>
+          <i class="closeicon" @click="closePopUp()">x</i>
         </div>
       </template>
       <template #body>
@@ -28,6 +28,11 @@ export default {
     },
     props: {
         event: Object
+    },
+    methods: {
+      closePopUp() {
+        this.$emit('closePopUp');
+      }
     }
 }
 </script>
