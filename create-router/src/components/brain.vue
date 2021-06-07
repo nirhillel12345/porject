@@ -6,9 +6,27 @@
     </select>
     <LMap :zoom="zoom" :center="center">
       <LTileLayer :url="url"></LTileLayer>
-      <l-marker :lat-lng="[40.731810,-73.936542]">
+      <l-marker :lat-lng="[40.731810,-73.936542]" @click="triggerDialog(0)">
           <l-popup>{{this.displayText}}</l-popup>
       </l-marker>
+
+      <md-dialog :md-active.sync="this.trigger">
+        <div class="flex flex-col">
+        <div>פרטי אירוע</div>
+        <div>
+            <p>סוג אירוע: {{eventType(1)}}</p>
+            <p>זמן אירוע: {{eventTime(1)}}</p>
+            <p>זמן דיווח: {{reportTime(1)}}</p>
+            <p>מזהה מדווח: {{reporterId(1)}}</p>
+            <p>איזור אירוע: {{eventArea(1)}}</p>
+        </div>
+
+        <div class="flex justify-end space-x-2">
+            <button @click="triggerDialog">Close</button>
+        </div>
+    </div>
+      </md-dialog>
+      
       <LMarker :lat-lng="[40.730620,-73.934250]">
           <l-popup class="popup">{{this.displayText}}</l-popup>
       </LMarker>
@@ -23,6 +41,7 @@
 import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
 import reports from "../../data/reports_json.json";
 import { icon } from "leaflet";
+import VEasyDialog from 'v-easy-dialog';
 
 export default {
   name: "Map",
@@ -31,9 +50,11 @@ export default {
     LTileLayer,
     LMarker,
     LPopup,
+    VEasyDialog,
   },
   data() {
     return {
+      trigger: false,
       url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
       zoom: 16,
       center: [40.73061, -73.935242],
@@ -65,11 +86,32 @@ export default {
       ]
     };
   },
+  created() {
+    this.trigger = false;
+  },
   methods: {
     changeArea: function() {
       this.center = this.areaList.find(
         area => area.name === this.selected
       ).coordinates;
+    },
+    triggerDialog() {
+      this.trigger = !this.trigger;
+    },
+    eventType(index) {
+      return this.events.reports[index].ev_type;
+    },
+    eventTime(index) {
+      return this.events.reports[index].ev_time;
+    },
+    reportTime(index) {
+      return this.events.reports[index].ev_report_time;
+    },
+    reporterId(index) {
+      return this.events.reports[index].reporter_id;
+    },
+    eventArea(index) {
+      return this.events.reports[index].ev_area;
     }
   }, 
   mounted() {
@@ -79,6 +121,8 @@ export default {
                     "זמן דיווח: " + event.ev_report_time + "\n" + 
                     "מזהה מדווח: " + event.reporter_id + "\n" +
                     "איזור אירוע: " + event.ev_area;
+  },
+  computed: {
   }
 };
 </script>
