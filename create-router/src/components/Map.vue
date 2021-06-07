@@ -2,14 +2,14 @@
   <div class="map" style="height: 80vh">
     <LMap :zoom="zoom" :center="center">
       <LTileLayer :url="url"></LTileLayer>
-      <l-marker class="marker" :lat-lng="[40.731810,-73.936542]">
-          <l-popup :content="displayText"></l-popup>
+      <l-marker :lat-lng="[40.731810,-73.936542]">
+          <l-popup>{{this.displayText}}</l-popup>
       </l-marker>
-      <LMarker class="marker" :lat-lng="[40.730620,-73.934250]">
-          <l-popup :content="displayText"></l-popup>
+      <LMarker :lat-lng="[40.730620,-73.934250]">
+          <l-popup class="popup">{{this.displayText}}</l-popup>
       </LMarker>
-      <LMarker class="marker" :lat-lng="[40.730529,-73.935949]">
-          <l-popup :content="displayText"></l-popup>
+      <LMarker :lat-lng="[40.730529,-73.935949]">
+          <l-popup class="popup">{{this.displayText}}</l-popup>
       </LMarker>
     </LMap>
     <eventPopUp v-show="popUpShow" v-bind:event="events.reports[0]" v-on:closePopUp="popUpShow = false" ></eventPopUp>
@@ -42,24 +42,8 @@ export default {
       displayText: ""
     };
   },
-  methods: {
-    //   createPopUpContent( eventIndex) {
-    //       const event = events.reports[eventIndex];
-    //       return `סוג אירוע: ${event.ev_type}
-    //                 זמן אירוע: ${event.ev_time}
-    //                 זמן דיווח: ${event.ev_report_time}
-    //                 מזהה מדווח: ${event.reporter_id}
-    //                 איזור אירוע: ${event.ev_area}`;
-    //   }
-  },
-  computed: {
-    //   createPopUpContent() {
-    //       const event = reports[0];
-    //       return ;
-    //   }
-  },
+
   mounted() {
-      const markerList = document.getElementsByClassName
       const event = this.events.reports[0];
       this.displayText = "סוג אירוע: " + event.ev_type + "\n" + 
                     "זמן אירוע: " + event.ev_time + "\n" + 
