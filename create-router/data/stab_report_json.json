@@ -1,0 +1,16 @@
+{
+  "stab_reports": [
+      {
+        "stabber_id": "123123123",
+        "weapon_type": "knife",
+        "casualties_num": "2",
+        "report_id": "2"
+      },
+      {
+        "shooter_id": "123333123",
+        "weapon_type": "sword",
+        "casualties_num": "3",
+        "report_id": "7"
+      }
+    ]
+}
