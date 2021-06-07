@@ -6,13 +6,23 @@
     </select>
     <LMap :zoom="zoom" :center="center" @click="showPoint">
       <LTileLayer :url="url"></LTileLayer>
-    </LMap>
+          <l-marker :lat-lng="[40.731810,-73.936542]">
+          <l-popup>{{this.displayText}}</l-popup>
+      </l-marker>
+      <LMarker :lat-lng="[40.730620,-73.934250]">
+          <l-popup class="popup">{{this.displayText}}</l-popup>
+      </LMarker>
+      <LMarker :lat-lng="[40.730529,-73.935949]">
+          <l-popup class="popup">{{this.displayText}}</l-popup>
+      </LMarker>
+      </LMap>
   </div>
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 import { icon } from "leaflet";
+import reports from "../../data/reports_json.json";
 
 export default {
   name: "Map",
@@ -20,7 +30,7 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LIcon
+    LPopup
   },
   data() {
     return {
@@ -34,13 +44,23 @@ export default {
           "מרדף",
           "חטיפה",
           "ירי"
-      ]
+      ],
+      events: reports,
+      displayText: "",
     };
   },
   methods: {
     showPoint: function(event) {
       alert(event.latlng);
     }
+  },
+  mounted() {
+      const event = this.events.reports[0];
+      this.displayText = "סוג אירוע: " + event.ev_type + "\n" + 
+                    "זמן אירוע: " + event.ev_time + "\n" + 
+                    "זמן דיווח: " + event.ev_report_time + "\n" + 
+                    "מזהה מדווח: " + event.reporter_id + "\n" +
+                    "איזור אירוע: " + event.ev_area;
   }
 };
 </script>
