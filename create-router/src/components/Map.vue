@@ -3,9 +3,7 @@
     <LMap :zoom="zoom" :center="center">
       <LTileLayer :url="url"></LTileLayer>
       <LMarker :lat-lng="[40.731810,-73.936542]">
-        
         <!-- <eventPopUp v-show="popUpShow" v-bind="events[0]" v-on:closePopUp="popUpShow = false" ></eventPopUp> -->
-         
       </LMarker>
       <LMarker :lat-lng="[40.730620,-73.934250]"></LMarker>
       <LMarker :lat-lng="[40.730529,-73.935949]"></LMarker>
