@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/components/home'
-import form from '@/components/form.vue'
 import brain from '@/components/brain'
 import iControlWeb from '@/components/iControlWeb'
 
@@ -13,11 +12,6 @@ export default new Router({
       path: '/',
       name: 'home',
       component: home
-    },
-    {
-      path: '/form',
-      name: 'form',
-      component: form
     },
     {
       path: '/brain',

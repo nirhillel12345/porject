@@ -9,6 +9,12 @@ import 'vue-material/dist/theme/default.css'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import { Icon } from "leaflet";
 import 'leaflet/dist/leaflet.css';
+import VModal from "vue-js-modal";
+import vuetify from '@/plugins/vuetify'
+
+Vue.use(VModal, {
+  dialog: true
+});
 
 Vue.use(VueMaterial)
 Vue.config.productionTip = false
@@ -30,5 +36,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  vuetify
 })
