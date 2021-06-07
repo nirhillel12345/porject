@@ -1,6 +1,6 @@
 <template>
-  <div class="map" style="height: 80vh">
-    <select v-model="selected" @change="changeArea">
+  <div class="map">
+    <select class="dropdown" v-model="selected" @change="changeArea">
       <option disabled value="">אנא בחר איזור</option>
       <option v-for="area in areaList" :key="area.name">{{ area.name }}</option>
     </select>
@@ -36,7 +36,7 @@ export default {
         },
         {
           name: "מנהטן",
-          coordinates: [40.730610, -73.935242]
+          coordinates: [40.73061, -73.935242]
         },
         {
           name: "ברוקלין",
@@ -54,9 +54,28 @@ export default {
     };
   },
   methods: {
-      changeArea: function () {
-          this.center = this.areaList.find(area => area.name === this.selected).coordinates;
-      }
-  },
+    changeArea: function() {
+      this.center = this.areaList.find(
+        area => area.name === this.selected
+      ).coordinates;
+    }
+  }
 };
 </script>
+
+<style scoped>
+.map {
+  height: 50vh;
+  width: 50vh;
+  direction: rtl;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.dropdown {
+    margin-bottom: 2vh;
+    height: 4vh;
+    width: 25vh;
+}
+</style>
