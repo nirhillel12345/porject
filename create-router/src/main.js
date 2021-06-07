@@ -6,7 +6,6 @@ import router from './router'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import { Icon } from "leaflet";
 import 'leaflet/dist/leaflet.css';
-import { DatePicker } from 'ant-design-vue';
 
 Vue.use(DatePicker);
 
