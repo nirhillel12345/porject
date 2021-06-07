@@ -1,15 +1,13 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <Map></Map>
   </div>
 </template>
 <script>
-import { Map } from "../components/Map.vue";
+
 
 export default {
   name: 'home',
-  components: Map,
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

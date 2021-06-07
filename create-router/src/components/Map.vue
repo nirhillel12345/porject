@@ -8,7 +8,7 @@
           class-name="someExtraClass"
           @click="popUpShow = true"
         >
-        <eventPopUp v-show="popUpShow" v-on:closePopUp="popUpShow = false"></eventPopUp>
+        <eventPopUp v-show="popUpShow" v-bind="events[0]" v-on:closePopUp="popUpShow = false" ></eventPopUp>
           <img src="map-service/src/assets/running_man.png">
         </l-icon>
       </LMarker>
@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
-import { eventPopUp } from "../components/eventPopUp.vue"
-import { reports } from "../../data/reports_json.json";
+import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet";
+import eventPopUp from "../components/eventPopUp"
+import reports from "../../data/reports_json.json";
 
 export default {
   name: 'Map',
@@ -29,6 +29,7 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
+    LIcon,
     eventPopUp,
   },
   data() {
@@ -38,8 +39,8 @@ export default {
       center: [40.730610,-73.935242],
       bounds: null,
       staticAnchor: [16, 37],
-      popUpShow: false,
-      event: reports[0]
+      popUpShow: true,
+      events: reports
     };
   }
 }
