@@ -256,7 +256,7 @@ this.form.eventName = null;
             report_time: this.reportingTime,
             event_name: this.$v.form.eventName.$model,
             lat: this.selectedPoint.lat,
-           lon: this.selectedPoint.lng,
+            lon: this.selectedPoint.lng,
           }
         };
 
