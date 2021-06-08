@@ -1,0 +1,16 @@
+{
+  "shoot_report": [
+      {
+        "shooter_id": "123123123",
+	"weapon_type": "M16",
+        "casualties_num": "3",
+        "report_id": "2"
+      },
+      {
+        "shooter_id": "123333123",
+	"weapon_type": "tavor",
+        "casualties_num": "3",
+        "report_id": "7"
+      }
+    ]
+}

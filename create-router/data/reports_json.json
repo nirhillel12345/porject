@@ -1,0 +1,34 @@
+{
+  "reports": [
+      {
+        "ev_type": "stabbing",
+        "ev_time": "6/6/2021",
+        "ev_report_time": "05:30",
+        "reporter_id": "policeman 1 id",
+        "ev_locx": "40.730610",
+	"ev_locy": "-73.935242",
+	"ev_area": "central park",
+        "report_id": "1"
+      },
+      {
+        "ev_type": "shooting",
+        "ev_time": "5/6/2021",
+        "ev_report_time": "18:14",
+        "reporter_id": "policeman 4 id",
+        "ev_locx": "40.730620",
+	"ev_locy": "-73.935250",
+	"ev_area": "manhattan",
+        "report_id": "2"
+      },
+      {
+        "ev_type": "accident",
+        "ev_time": "6/6/2021",
+        "ev_report_time": "22:43",
+        "reporter_id": "policeman 7 id",
+        "ev_locx": "40.730629",
+	"ev_locy": "-73.935249",
+	"ev_area": "bronx",
+        "report_id": "3"
+      }
+    ]
+}
