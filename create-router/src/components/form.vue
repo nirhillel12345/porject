@@ -1,261 +1,142 @@
 <template>
-  <div>
+  <div  v-if="getEventType == null || getSwitched == false" >
     <form novalidate class="md-layout" @submit.prevent="validateUser">
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
+      <md-card class="md-layout-item md-size-100 md-small-size-100">
         <md-card-header>
           <div class="md-title">יצירת התראה</div>
         </md-card-header>
 
-        <md-card-content>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('offensiveName')">
-                <label for="offensive-name">שם הפוגע</label>
-                <md-input
-                  name="offensive-name"
-                  id="offensive-name"
-                  autocomplete="given-name"
-                  v-model="form.offensiveName"
-                  :disabled="sending"
-                />
-                <span class="md-error" v-if="!$v.form.offensiveName.required"
-                  >חובה למלא את שם הפוגע
-                </span>
-                <span
-                  class="md-error"
-                  v-else-if="!$v.form.offensiveName.minlength"
-                  >Invalid first name</span
-                >
-              </md-field>
-            </div>
+      
 
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('injuredName')">
-                <label for="injured-name">שם הנפגע</label>
-                <md-input
-                  name="injured-name"
-                  id="injured-name"
-                  autocomplete="family-name"
-                  v-model="form.injuredName"
-                  :disabled="sending"
-                />
-                <span class="md-error" v-if="!$v.form.injuredName.required"
-                  >חובה למלא את שם הנפגע</span
-                >
-                <span
-                  class="md-error"
-                  v-else-if="!$v.form.injuredName.minlength"
-                  >Invalid last name</span
-                >
-              </md-field>
-            </div>
-          </div>
 
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('offensiveName')">
-                <label for="event-type">סוג האירוע</label>
-                <md-select
-                  name="event-type"
-                  id="event-type"
-                  v-model="form.eventType"
-                  md-dense
-                  :disabled="sending"
-                >
-                  <md-option></md-option>
-                  <md-option value="ירי">ירי</md-option>
-                  <md-option value="דקירה">דקירה</md-option>
-                  <md-option value="חטיפה">חטיפה</md-option>
-                  <md-option value="תאונה">תאונה</md-option>
+          <div class="md-layout md-gutter" >
+            <div class="md-layout-item md-small-size-100 ">
+              <md-field :class="getValidationClass('eventType')">
+                <label style="position:absolute; right:0"  for="event-type">סוג האירוע</label>
+                <md-select  name="event-type" id="event-type" v-model="form.eventType" md-dense :disabled="sending">
+                  
+                  <md-option  value=1>ירי</md-option>
+                  <md-option value=2>דקירה</md-option>
+                  <md-option value=3>חטיפה</md-option>
+                  <md-option value=4>תאונה</md-option>
+
                 </md-select>
-                <span class="md-error"> חובה למלא את סוג האירוע</span>
+                <span class="md-error">  חובה למלא את סוג האירוע</span>
               </md-field>
             </div>
 
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('severalWounded')">
-                <label for="several-wounded">מספר נפגעים</label>
-                <md-input
-                  type="number"
-                  id="several-wounded"
-                  name="several-wounded"
-                  autocomplete="several-wounded"
-                  v-model="form.severalWounded"
-                  :disabled="sending"
-                />
-                <span class="md-error" v-if="!$v.form.severalWounded.required"
-                  >חובה למלא את מספר הנפגעים</span
-                >
-                <span
-                  class="md-error"
-                  v-else-if="!$v.form.severalWounded.maxlength"
-                  >Invalid severalWounded</span
-                >
-              </md-field>
-            </div>
           </div>
-
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100 ">
-              <t>זמן האירוע</t>
-              <date-picker v-model="eventTime" type="datetime"></date-picker>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <t>זמן הדיווח</t>
-              <date-picker v-model="reportingTime" type="datetime"></date-picker>
-            </div>
-          </div>
-
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100 ">
-              <md-field :class="getValidationClass('offensiveName')">
-                <md-input
-                  name="reports-name"
-                  id="reports-name"
-                  autocomplete="reportsName"
-                  v-model="form.reportsName"
-                  :disabled="sending"
-                />
-                <label for="reports-name"> זהות המדווח</label>
-              </md-field>
-            </div>
-          </div>
-        </md-card-content>
-
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
-        <md-card-actions class="md-alignment-left">
-          <md-button
-            class="md-danger"
-            @click="confirmActivity"
-            >בטל</md-button
-          >
-          <md-button
-            type="submit"
-            class="md-primary"
-            :disabled="sending"
-            >צור התראה</md-button
-          >
+        <md-card-actions>
+          <md-button type="submit" class="md-primary" @click.native="clickedContinue()" :disabled="sending">המשך </md-button>
         </md-card-actions>
       </md-card>
 
-      <md-snackbar :md-active.sync="userSaved"
-        >The user {{ lastUser }} was saved with success!</md-snackbar
-      >
+      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
     </form>
   </div>
+  <accident v-bind:selectedPoint="selectedPoint" v-else-if="getEventType == 4 && getSwitched == true" > </accident>
+  <kidnapping v-bind:selectedPoint="selectedPoint" v-else-if="getEventType == 3 && getSwitched == true" > </kidnapping>
+  <shootingSttack v-bind:selectedPoint="selectedPoint" v-else-if="getEventType == 1 && getSwitched == true" > </shootingSttack>
+  <stabbingAttack v-bind:selectedPoint="selectedPoint" v-else-if="getEventType == 2 && getSwitched == true" > </stabbingAttack>
+
+
 </template>
 
 <script>
-import DatePicker from "vue2-datepicker";
-import "vue2-datepicker/index.css";
-import { validationMixin } from "vuelidate";
-import {
-  required,
-  email,
-  minLength,
-  maxLength
-} from "vuelidate/lib/validators";
-
-export default {
-  components: { DatePicker },
-  name: "FormValidation",
-  mixins: [validationMixin],
-  data: () => ({
-    form: {
-      offensiveName: null,
-      injuredName: null,
-      eventType: null,
-      severalWounded: null,
-      email: null,
-      reportsName: null
-    },
-    eventTime: null,
-    reportingTime: null,
-    userSaved: false,
-    sending: false,
-    lastUser: null
-  }),
-  validations: {
-    form: {
-      offensiveName: {
-        required,
-        minLength: minLength(1)
+import axios from 'axios';
+import DatePicker from 'vue2-datepicker';
+  import 'vue2-datepicker/index.css';
+  import { validationMixin } from 'vuelidate'
+  import {
+    required,
+    email,
+    minLength,
+    maxLength
+  } from 'vuelidate/lib/validators'
+  import accident from "./accident.vue"
+  import kidnapping from "./kidnapping.vue"
+  import shootingSttack from "./shootingSttack.vue"
+  import stabbingAttack from "./stabbingAttack.vue"
+  export default {
+    components: { DatePicker, accident, kidnapping, shootingSttack, stabbingAttack  },
+    name: 'FormValidation',
+    mixins: [validationMixin],
+    props: ["selectedPoint"],
+    data: () => ({
+      form: {
+        eventType: null,
       },
-      injuredName: {
-        required,
-        minLength: minLength(1)
-      },
-      severalWounded: {
-        required,
-        maxLength: maxLength(1)
-      },
-      eventType: {
-        required
-      },
-      email: {
-        required,
-        email
-      }
-    }
-  },
-  methods: {
-    getValidationClass(fieldName) {
-      const field = this.$v.form[fieldName];
-
-      if (field) {
-        return {
-          "md-invalid": field.$invalid && field.$dirty
-        };
+      sending: false,
+      lastUser: null,
+      userSaved: null,
+      switch: false,
+    }),
+    validations: {
+      form: {
+        eventType: {
+          required
+        },
       }
     },
-    clearForm() {
-      this.$v.$reset();
-      this.form.offensiveName = null;
-      this.form.injuredName = null;
-      this.form.severalWounded = null;
-      this.form.eventType = null;
-      this.form.email = null;
-    },
-    saveUser() {
-      this.sending = true;
-
-      // Instead of this timeout, here you can call your API
-      window.setTimeout(() => {
-        this.lastUser = `${this.form.offensiveName} ${this.form.injuredName}`;
-        this.userSaved = true;
-        this.sending = false;
-        this.clearForm();
-      }, 1500);
-    },
-    validateUser() {
-      this.$v.$touch();
-
-      if (!this.$v.$invalid) {
-        this.saveUser();
+    methods: {
+      getValidationClass (fieldName) {
+        const field = this.$v.form[fieldName]
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
+          }
+        }
+      },
+      clearForm () {
+        this.$v.$reset()
+        this.form.eventType = null
+      },
+      saveUser () {
+        this.sending = true
+        sendPostRequest();
+        // Instead of this timeout, here you can call your API
+        window.setTimeout(() => {
+          this.lastUser = `${this.form.offensiveName} ${this.form.injuredName}`
+          this.sending = false
+          this.clearForm()
+        }, 1500)
+      },
+      validateUser () {
+        this.$v.$touch()
+        if (!this.$v.$invalid) {
+          this.saveUser()
+        }
+      },
+      clickedContinue(){
+          this.switch = true;
       }
+     
     },
-    confirmActivity() {
-      this.$emit("confirmActivity");
+    computed:{
+      getEventType(){
+        return this.$v.form.eventType.$model
+      },
+      getSwitched(){
+        return this.switch;
+      }
     }
   }
-};
 </script>
 <style>
-.label {
-  float: "right";
-}
-.md-input {
-  direction: RTL;
-}
-.md-title {
+.md-title{
   color: red;
 }
-.md-layout-item.md-size-50 {
-  min-width: 100%;
-  max-width: 100%;
+.md-menu-content.md-select-menu {
+  z-index: 100000;
 }
-.md-layout-item {
-    flex: auto;
+.md-card {
+  padding: 2REM;
 }
+.md-select-menu{
+  margin-top: 3REm;
+  margin-right: 3rem;
+}
+
 </style>
