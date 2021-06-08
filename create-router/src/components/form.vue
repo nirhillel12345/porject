@@ -97,15 +97,12 @@
 
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100 ">
-              <t>זמן האירוע </t>
+              <t>זמן האירוע</t>
               <date-picker v-model="eventTime" type="datetime"></date-picker>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <t>זמן הדיווח </t>
-              <date-picker
-                v-model="reportingTime"
-                type="datetime"
-              ></date-picker>
+              <t>זמן הדיווח</t>
+              <date-picker v-model="reportingTime" type="datetime"></date-picker>
             </div>
           </div>
 
@@ -127,7 +124,7 @@
 
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
-        <md-card-actions>
+        <md-card-actions class="md-alignment-left">
           <md-button
             type="submit"
             class="md-primary"
@@ -244,11 +241,17 @@ export default {
 .label {
   float: "right";
 }
-
 .md-input {
   direction: RTL;
 }
 .md-title {
   color: red;
+}
+.md-layout-item.md-size-50 {
+  min-width: 100%;
+  max-width: 100%;
+}
+.md-layout-item {
+    flex: auto;
 }
 </style>

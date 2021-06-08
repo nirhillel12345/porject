@@ -9,8 +9,8 @@
     <LMap :zoom="zoom" :center="center" @click="showForm">
       <LTileLayer :url="url"></LTileLayer>
     </LMap>
-    <md-dialog :md-active.sync="dialog" width=500>
-      <activityForm @confirmActivity="dialog = false"></activityForm>
+    <md-dialog :md-active.sync="dialog" width="500" class="addReportDialog">
+      <activityForm @confirmActivity="dialog = false" />
     </md-dialog>
   </div>
 </template>
@@ -64,5 +64,8 @@ export default {
   margin-bottom: 2vh;
   height: 4vh;
   width: 25vh;
+}
+.addReportDialog {
+  direction: rtl;
 }
 </style>
