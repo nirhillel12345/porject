@@ -7,32 +7,32 @@
     <LMap :zoom="zoom" :center="center">
       <LTileLayer :url="url"></LTileLayer>
       <l-marker :lat-lng="[40.731810,-73.936542]" @click="triggerDialog(0)">
-          <l-popup>{{this.displayText}}</l-popup>
       </l-marker>
+      <LMarker :lat-lng="[40.730620,-73.934250]" @click="triggerDialog(1)">
+      </LMarker>
+      <LMarker :lat-lng="[40.730529,-73.935949]" @click="triggerDialog(2)">
+      </LMarker>
 
       <md-dialog :md-active.sync="this.trigger">
-        <div class="flex flex-col">
-        <div>פרטי אירוע</div>
         <div>
-            <p>סוג אירוע: {{eventType(1)}}</p>
-            <p>זמן אירוע: {{eventTime(1)}}</p>
-            <p>זמן דיווח: {{reportTime(1)}}</p>
-            <p>מזהה מדווח: {{reporterId(1)}}</p>
-            <p>איזור אירוע: {{eventArea(1)}}</p>
-        </div>
-
-        <div class="flex justify-end space-x-2">
-            <button @click="triggerDialog">Close</button>
-        </div>
-    </div>
-      </md-dialog>
-      
-      <LMarker :lat-lng="[40.730620,-73.934250]">
-          <l-popup class="popup">{{this.displayText}}</l-popup>
-      </LMarker>
-      <LMarker :lat-lng="[40.730529,-73.935949]">
-          <l-popup class="popup">{{this.displayText}}</l-popup>
-      </LMarker>
+          <div class="md-layout">
+            <div class="md-layout-item">
+              <div dir="rtl" class="md-headline"><b>פרטי אירוע</b></div>
+              <div dir="rtl">
+              <p class="ps-2"><b>סוג אירוע: </b>{{eventType()}}</p>
+              <p class="ps-2"><b>זמן אירוע: </b>{{eventTime()}}</p>
+              <p class="ps-2"><b>זמן דיווח: </b>{{reportTime()}}</p>
+              <p class="ps-2"><b>מזהה מדווח: </b>{{reporterId()}}</p>
+              <p class="ps-2"><b>איזור אירוע: </b>{{eventArea()}}</p>
+            </div>
+          </div>
+            <div class="md-layout-item md-size-10"></div>
+          </div>
+          <div class="flex space-x-2">
+            <md-button class="md-accent" @click="closeDialog()"><b>סגור</b></md-button>
+          </div>
+      </div>
+    </md-dialog>
     </LMap>
   </div>
 </template>
@@ -55,13 +55,13 @@ export default {
   data() {
     return {
       trigger: false,
+      curEventIndex: 0,
       url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
       zoom: 16,
       center: [40.73061, -73.935242],
       bounds: null,
       selected: "",
       events: reports,
-      displayText: "",
       areaList: [
         {
           name: "ברונקס",
@@ -86,44 +86,35 @@ export default {
       ]
     };
   },
-  created() {
-    this.trigger = false;
-  },
   methods: {
     changeArea: function() {
       this.center = this.areaList.find(
         area => area.name === this.selected
       ).coordinates;
     },
-    triggerDialog() {
-      this.trigger = !this.trigger;
+    triggerDialog(index) {
+      this.trigger = true;
+      this.curEventIndex = index;
     },
-    eventType(index) {
-      return this.events.reports[index].ev_type;
+    closeDialog() {
+      this.trigger = false;
     },
-    eventTime(index) {
-      return this.events.reports[index].ev_time;
+    eventType() {
+      return this.events.reports[this.curEventIndex].ev_type;
     },
-    reportTime(index) {
-      return this.events.reports[index].ev_report_time;
+    eventTime() {
+      return this.events.reports[this.curEventIndex].ev_time;
     },
-    reporterId(index) {
-      return this.events.reports[index].reporter_id;
+    reportTime() {
+      return this.events.reports[this.curEventIndex].ev_report_time;
     },
-    eventArea(index) {
-      return this.events.reports[index].ev_area;
+    reporterId() {
+      return this.events.reports[this.curEventIndex].reporter_id;
+    },
+    eventArea() {
+      return this.events.reports[this.curEventIndex].ev_area;
     }
   }, 
-  mounted() {
-      const event = this.events.reports[0];
-      this.displayText = "סוג אירוע: " + event.ev_type + "\n" + 
-                    "זמן אירוע: " + event.ev_time + "\n" + 
-                    "זמן דיווח: " + event.ev_report_time + "\n" + 
-                    "מזהה מדווח: " + event.reporter_id + "\n" +
-                    "איזור אירוע: " + event.ev_area;
-  },
-  computed: {
-  }
 };
 </script>
 
