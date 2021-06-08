@@ -137,7 +137,6 @@ export default {
   z-index: 100;
 }
 .dropdown {
-  /* margin-top: 2vh; */
   z-index: 5100;
   height: 4vh;
   width: 25vh;
