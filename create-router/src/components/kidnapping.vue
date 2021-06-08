@@ -68,6 +68,14 @@
                 <date-picker v-model="reportingTime" :class="getValidationClass('reportingTime')" type="datetime"></date-picker>
             </div>
           </div>
+          <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('eventName')">
+                <label for="event-name">שם האירוע</label>
+                <md-input name="event-name" id="event-name" autocomplete="family-name" v-model="form.eventName" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.eventName.required">חובה למלא את שם האירוע</span>
+                <span class="md-error" v-else-if="!$v.form.eventName.minlength">Invalid last name</span>
+              </md-field>
+            </div>
           
           
         </md-card-content>
@@ -109,6 +117,7 @@ import DatePicker from 'vue2-datepicker';
         severalWounded: null,
         email: null,
         reportsName: null,
+        eventName: null
       },
       eventTime: null,
       reportingTime: null,
@@ -147,6 +156,11 @@ import DatePicker from 'vue2-datepicker';
           required,
           
         }
+        ,
+        eventName: {
+          required,
+          
+        }
       }
     },
     methods: {
@@ -166,6 +180,7 @@ import DatePicker from 'vue2-datepicker';
         this.form.severalWounded  = null
         this.form.eventType = null
         this.form.reportsName = null
+        this.form.eventName = null
       },
       saveUser () {
         this.sending = true
@@ -193,7 +208,8 @@ import DatePicker from 'vue2-datepicker';
            this.$v.form.eventType.$model != "" &&
            this.$v.form.reportsName.$model != "" && 
            this.eventTime != "" && 
-           this.reportingTime != ""){
+           this.reportingTime != "" &&
+           this.eventName != ""){
            
         const dataToSend = {report:{criminal: this.$v.form.kidnappingName.$model,
          kidnapped : this.$v.form.whoKidnapping.$model ,
@@ -202,7 +218,10 @@ import DatePicker from 'vue2-datepicker';
           event_type : 3,
            user_name: this.$v.form.reportsName.$model ,
            event_time: this.eventTime ,
-           report_time:  this.reportingTime
+           report_time:  this.reportingTime,
+           event_name: this.$v.form.eventName.$model,
+           lat: 20,
+           lon: 15
         }};
           
   axios.post("http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports", dataToSend)

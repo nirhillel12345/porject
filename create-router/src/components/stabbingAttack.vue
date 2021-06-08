@@ -104,6 +104,14 @@
               ></date-picker>
             </div>
           </div>
+          <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('eventName')">
+                <label for="event-name">שם האירוע</label>
+                <md-input name="event-name" id="event-name" autocomplete="family-name" v-model="form.eventName" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.eventName.required">חובה למלא את שם האירוע</span>
+                <span class="md-error" v-else-if="!$v.form.eventName.minlength">Invalid last name</span>
+              </md-field>
+            </div>
         </md-card-content>
 
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
@@ -158,7 +166,8 @@ export default {
     sending: false,
     lastUser: null,
     lat: null,
-    lon: null
+    lon: null,
+    eventName: null
   }),
   validations: {
     form: {
@@ -182,6 +191,10 @@ export default {
       reportingTime: {
         required
       }
+      ,
+      eventName: {
+        required
+      }
     }
   },
   methods: {
@@ -198,7 +211,7 @@ export default {
       this.$v.$reset();
       this.form.stabbingName = null;
       this.form.gunType = null;
-
+this.form.eventName = null;
       this.form.eventType = null;
       this.form.reportsName = null;
     },
@@ -228,7 +241,8 @@ export default {
         this.$v.form.eventType.$model != "" &&
         this.$v.form.reportsName.$model != "" &&
         this.eventTime != "" &&
-        this.reportingTime != ""
+        this.reportingTime != "" &&
+        this.$v.form.eventName.$model != ""
       ) {
         const dataToSend = {
           report: {
@@ -239,7 +253,10 @@ export default {
             event_type: 2,
             user_name: this.$v.form.reportsName.$model,
             event_time: this.eventTime,
-            report_time: this.reportingTime
+            report_time: this.reportingTime,
+            event_name: this.$v.form.eventName.$model,
+            lat: 30,
+           lon: 20,
           }
         };
 

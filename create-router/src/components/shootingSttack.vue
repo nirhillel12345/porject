@@ -68,6 +68,14 @@
                 <date-picker v-model="reportingTime" :class="getValidationClass('reportingTime')" type="datetime"></date-picker>
             </div>
           </div>
+          <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('eventName')">
+                <label for="event-name">שם האירוע</label>
+                <md-input name="event-name" id="event-name" autocomplete="family-name" v-model="form.eventName" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.eventName.required">חובה למלא את שם האירוע</span>
+                <span class="md-error" v-else-if="!$v.form.eventName.minlength">Invalid last name</span>
+              </md-field>
+            </div>
           
            
         </md-card-content>
@@ -116,7 +124,8 @@ import DatePicker from 'vue2-datepicker';
       sending: false,
       lastUser: null,
       lat: null,
-    lon: null
+    lon: null,
+    eventName: null
     }),
     validations: {
       form: {
@@ -143,6 +152,11 @@ import DatePicker from 'vue2-datepicker';
           required,
           
         }
+        ,
+        eventName: {
+          required,
+          
+        }
       }
     },
     methods: {
@@ -159,7 +173,7 @@ import DatePicker from 'vue2-datepicker';
         this.$v.$reset()
         this.form.shootingName = null
         this.form.gunType = null
-       
+        this.form.eventName = null
         this.form.eventType = null
         this.form.reportsName = null
       },
@@ -185,7 +199,7 @@ import DatePicker from 'vue2-datepicker';
        sendPostRequest() {
         if(this.$v.form.shootingName.$model != "" &&
            this.$v.form.gunType.$model !="" && 
-         
+          this.$v.form.eventName.$model !="" && 
            this.$v.form.eventType.$model != "" &&
            this.$v.form.reportsName.$model != "" && 
            this.eventTime != "" && 
@@ -197,7 +211,10 @@ import DatePicker from 'vue2-datepicker';
           casualties : this.$v.form.eventType.$model,
            user_name: this.$v.form.reportsName.$model ,
            event_time: this.eventTime ,
-           report_time:  this.reportingTime
+           report_time:  this.reportingTime,
+           event_name: this.$v.form.eventName.$model,
+           lat: 30,
+           lon: 20,
         }};
           
   axios.post("http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports", dataToSend)
