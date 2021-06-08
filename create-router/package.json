@@ -13,6 +13,8 @@
     "@mdi/js": "^5.9.55",
     "ant-design-vue": "^1.7.5",
     "leaflet": "^1.7.1",
+    "leaflet-maskcanvas": "^1.0.0",
+    "leaflet.heat": "^0.2.0",
     "node-sass": "^6.0.0",
     "react": "^17.0.2",
     "sass-loader": "^12.0.0",

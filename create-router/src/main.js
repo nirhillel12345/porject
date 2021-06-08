@@ -8,7 +8,7 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import { Icon } from "leaflet";
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
 import VModal from "vue-js-modal";
 import vuetify from '@/plugins/vuetify'
 

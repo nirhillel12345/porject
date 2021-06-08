@@ -4,44 +4,55 @@
       <option disabled value="">אנא בחר איזור</option>
       <option v-for="area in areaList" :key="area.name">{{ area.name }}</option>
     </select>
-    <LMap :zoom="zoom" :center="center">
-      <LTileLayer :url="url"></LTileLayer>
-      <l-marker :lat-lng="[40.731810,-73.936542]" @click="triggerDialog(0)">
+    <LMap :zoom="zoom" :center="center" >
+      <!-- <LTileLayer :url="url"></LTileLayer> -->
+      <LeafletHeatmap
+        :lat-lngs="latlngs"
+        :radius="60"
+        :min-opacity="0.75"
+        :max-zoom="10"
+        :blur="60"
+      ></LeafletHeatmap>
+
+      <l-marker :lat-lng="[40.73181, -73.936542]" @click="triggerDialog(0)">
       </l-marker>
-      <LMarker :lat-lng="[40.730620,-73.934250]" @click="triggerDialog(1)">
+      <LMarker :lat-lng="[40.73062, -73.93425]" @click="triggerDialog(1)">
       </LMarker>
-      <LMarker :lat-lng="[40.730529,-73.935949]" @click="triggerDialog(2)">
+      <LMarker :lat-lng="[40.730529, -73.935949]" @click="triggerDialog(2)">
       </LMarker>
 
-      <md-dialog :md-active.sync="this.trigger">
+      <md-dialog :md-active.sync="this.trigger" class="dialog">
         <div>
           <div class="md-layout">
             <div class="md-layout-item">
               <div dir="rtl" class="md-headline"><b>פרטי אירוע</b></div>
               <div dir="rtl">
-              <p class="ps-2"><b>סוג אירוע: </b>{{eventType()}}</p>
-              <p class="ps-2"><b>זמן אירוע: </b>{{eventTime()}}</p>
-              <p class="ps-2"><b>זמן דיווח: </b>{{reportTime()}}</p>
-              <p class="ps-2"><b>מזהה מדווח: </b>{{reporterId()}}</p>
-              <p class="ps-2"><b>איזור אירוע: </b>{{eventArea()}}</p>
+                <p class="ps-2"><b>סוג אירוע: </b>{{ eventType() }}</p>
+                <p class="ps-2"><b>זמן אירוע: </b>{{ eventTime() }}</p>
+                <p class="ps-2"><b>זמן דיווח: </b>{{ reportTime() }}</p>
+                <p class="ps-2"><b>מזהה מדווח: </b>{{ reporterId() }}</p>
+                <p class="ps-2"><b>איזור אירוע: </b>{{ eventArea() }}</p>
+              </div>
             </div>
-          </div>
             <div class="md-layout-item md-size-10"></div>
           </div>
           <div class="flex space-x-2">
-            <md-button class="md-accent" @click="closeDialog()"><b>סגור</b></md-button>
+            <md-button class="md-accent" @click="closeDialog()"
+              ><b>סגור</b></md-button
+            >
           </div>
-      </div>
-    </md-dialog>
+        </div>
+      </md-dialog>
     </LMap>
   </div>
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 import reports from "../../data/reports_json.json";
 import { icon } from "leaflet";
-import VEasyDialog from 'v-easy-dialog';
+import VEasyDialog from "v-easy-dialog";
+import LeafletHeatmap from "./LeafletHeatmap";
 
 export default {
   name: "Map",
@@ -51,6 +62,7 @@ export default {
     LMarker,
     LPopup,
     VEasyDialog,
+    LeafletHeatmap
   },
   data() {
     return {
@@ -60,6 +72,12 @@ export default {
       zoom: 16,
       center: [40.73061, -73.935242],
       bounds: null,
+      maxValue: 0.5,
+      latlngs: [
+        [40.73181, -73.936542, 0.5],
+        [40.73062, -73.93425, 0.5],
+        [40.730529, -73.935949, 0.5]
+      ],
       selected: "",
       events: reports,
       areaList: [
@@ -114,7 +132,8 @@ export default {
     eventArea() {
       return this.events.reports[this.curEventIndex].ev_area;
     }
-  }, 
+  },
+  mounted() {}
 };
 </script>
 
@@ -122,10 +141,14 @@ export default {
 .map {
   height: 85vh;
   direction: rtl;
+  z-index: 100;
 }
 .dropdown {
-    margin-bottom: 2vh;
-    height: 4vh;
-    width: 25vh;
+  margin-bottom: 2vh;
+  height: 4vh;
+  width: 25vh;
+}
+.dialog {
+  z-index: 500;
 }
 </style>
