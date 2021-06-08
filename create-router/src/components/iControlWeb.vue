@@ -1,15 +1,20 @@
 <template>
   <div class="map">
-    <select class="dropdown" v-model="selected">
-      <option value="">כל האירועים</option>
-      <option v-for="activity in activityList" :key="activity.name">{{ activity }}</option>
+    <select class="dropdown" @change="changeShownTypes($event)">
+      <option value="activities and reports">אירועים ופעילויות</option>
+      <option value="reports">דיווחים</option>
+      <option value="activities">פעילויות</option>
     </select>
     <LMap :zoom="zoom" :center="center" @click="showPoint" v-if="!this.isLoading" id="controlWebMap">
       <LTileLayer :url="url"></LTileLayer>
+      <div v-if="this.showReports">
         <l-marker v-for="(report, index) in this.reports" :key="'report' + index" 
-          :lat-lng="[report.lat, report.lon]" @click="triggerReportsDialog(index)"></l-marker>
+            :lat-lng="[report.lat, report.lon]" @click="triggerReportsDialog(index)"></l-marker>
+      </div>
+      <div v-if="this.showActivities">
         <l-marker v-for="(activity, index) in this.activities" :key="'activity' + index" 
           :lat-lng="[activity.lat, activity.lon]" @click="triggerActivitiesDialog(index)"></l-marker>
+      </div>
 
       <md-dialog :md-active.sync="this.reportsTrigger">
         <div>
@@ -72,6 +77,8 @@ export default {
   },
   data() {
     return {
+      showReports: true,
+      showActivities: true,
       reports: null,
       activities: null,
       activitiesLoading: true,
@@ -88,15 +95,32 @@ export default {
       center: [40.73061, -73.935242],
       bounds: null,
       selected: "",
-      activityList: [
-          "דקירה",
-          "מרדף",
-          "חטיפה",
-          "ירי"
-      ],
     };
   },
   methods: {
+    changeShownTypes(selectedOption) {
+      const typesToShow = selectedOption.target.value;
+      switch(typesToShow) {
+        case "activities and reports": {
+          this.showReports = true;
+          this.showActivities = true;
+          break;
+        }
+
+        case "reports": {
+          this.showReports = true;
+          this.showActivities = false;
+          break;
+        }
+
+        case "activities": {
+          this.showReports = false;
+          this.showActivities = true;
+          break;
+        }
+      }
+      
+    },
     showPoint: function(event) {
       alert(event.latlng);
     },
