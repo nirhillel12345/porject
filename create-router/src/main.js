@@ -9,8 +9,12 @@ import 'vue-material/dist/theme/default.css'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import { Icon } from "leaflet";
 import 'leaflet/dist/leaflet.css';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
-Vue.use(VueMaterial)
+
+Vue.use(VueMaterial);
+Vue.use(VueAxios, axios);
 Vue.config.productionTip = false
 
 delete Icon.Default.prototype._getIconUrl;
