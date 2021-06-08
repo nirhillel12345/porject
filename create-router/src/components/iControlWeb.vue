@@ -107,12 +107,11 @@ export default {
 <style scoped>
 .map {
   direction: rtl;
-  height: 85vh;
+  height: 86vh;
   width: "100%";
   z-index: 100;
 }
 .dropdown {
-  margin-bottom: 2vh;
   height: 4vh;
   width: 25vh;
 }
