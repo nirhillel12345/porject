@@ -126,10 +126,14 @@
 
         <md-card-actions class="md-alignment-left">
           <md-button
+            class="md-danger"
+            @click="confirmActivity"
+            >בטל</md-button
+          >
+          <md-button
             type="submit"
             class="md-primary"
             :disabled="sending"
-            @click="confirmActivity"
             >צור התראה</md-button
           >
         </md-card-actions>
