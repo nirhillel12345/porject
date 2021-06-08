@@ -8,13 +8,14 @@
     </select>
     <LMap :zoom="zoom" :center="center" @click="showForm">
       <LTileLayer :url="url"></LTileLayer>
-      <l-marker :lat-lng="[40.73181, -73.936542]" @click="triggerDialog(0)">
+      <l-marker :lat-lng="[40.73181, -73.936542]" @click="triggerDialog(0)" :icon="icon">
       </l-marker>
       <LMarker :lat-lng="[40.73062, -73.93425]" @click="triggerDialog(1)">
       </LMarker>
       <LMarker :lat-lng="[40.730529, -73.935949]" @click="triggerDialog(2)">
       </LMarker>
     </LMap>
+
     <md-dialog :md-active.sync="this.trigger" class="triggerDialog">
       <div>
         <div class="md-layout">
@@ -69,7 +70,31 @@ export default {
       selectedPoint: [],
       dialog: false,
       selected: "",
-      activityList: ["דקירה", "מרדף", "חטיפה", "ירי"],
+      activityList: [
+        {
+          activity: "דקירה",
+          iconUrl: require("../assets/knife.png")
+        },
+        {
+          activity: "תאונה",
+          iconUrl: require("../assets/warning.png")
+        },
+        {
+          activity: "חטיפה",
+          iconUrl: require("../assets/running.png")
+        },
+        { 
+          activity: "ירי",
+          iconUrl: require("../assets/hitmark.png")
+        }
+      ],
+      icon: L.icon({
+        iconUrl: require("../assets/hitmark.png"),
+        iconSize:     [45, 45], // size of the icon
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      }),
       events: reports
     };
   },
@@ -107,12 +132,12 @@ export default {
 <style scoped>
 .map {
   direction: rtl;
-  height: 85vh;
+  height: 86vh;
   width: "100%";
   z-index: 100;
 }
 .dropdown {
-  margin-bottom: 2vh;
+  z-index: 5100;
   height: 4vh;
   width: 25vh;
 }
