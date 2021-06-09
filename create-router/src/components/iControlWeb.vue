@@ -60,13 +60,18 @@
           </div>
       </div>
     </md-dialog>
-      </LMap>
+    <md-dialog :md-active.sync="dialog"    class="addReportDialog ">
+        
+        <activityForm  v-bind:selectedPoint="selectedPoint" @confirmActivity="dialog = false" />
+        
+    </md-dialog>
   </div>
 </template>
 
 <script>
 import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 import { icon } from "leaflet";
+import activityForm from "./form";
 
 export default {
   name: "Map",
@@ -74,6 +79,7 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
+    activityForm,
   },
   data() {
     return {
@@ -94,10 +100,26 @@ export default {
       zoom: 16,
       center: [40.73061, -73.935242],
       bounds: null,
+      selectedPoint: [],
+      dialog: false,
       selected: "",
+      icon: L.icon({
+        iconUrl: require("../assets/hitmark.png"),
+        iconSize:     [45, 45], // size of the icon
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      }),
     };
   },
   methods: {
+    emitSelectPoint(){
+      console.log("hillel")
+    },
+    showForm: function(event) {
+      this.selectedPoint = event.latlng;
+      this.dialog = true;
+    },
     changeShownTypes(selectedOption) {
       const typesToShow = selectedOption.target.value;
       switch(typesToShow) {
@@ -224,22 +246,24 @@ export default {
     });
 
   } 
-};
 </script>
 
 <style scoped>
 .map {
-  height: 50vh;
-  width: 75vw;
   direction: rtl;
-  position: fixed;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 86vh;
+  width: "100%";
+  z-index: 100;
 }
 .dropdown {
-    margin-bottom: 2vh;
-    height: 4vh;
-    width: 25vh;
+  height: 4vh;
+  width: 25vh;
+}
+.addReportDialog {
+  direction: rtl;
+  z-index: 500;
+}
+.triggerDialog {
+  z-index: 500;
 }
 </style>

@@ -11,7 +11,12 @@ import { Icon } from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VModal from "vue-js-modal";
+import vuetify from '@/plugins/vuetify'
 
+Vue.use(VModal, {
+  dialog: true
+});
 
 Vue.use(VueMaterial);
 Vue.use(VueAxios, axios);
@@ -34,5 +39,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  vuetify
 })

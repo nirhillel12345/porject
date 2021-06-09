@@ -138,13 +138,8 @@ export default {
 
 <style scoped>
 .map {
-  height: 50vh;
-  width: 50vh;
+  height: 85vh;
   direction: rtl;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 .dropdown {
     margin-bottom: 2vh;
