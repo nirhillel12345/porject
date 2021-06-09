@@ -32,11 +32,10 @@
               <md-field :class="getValidationClass('eventType')">
                 <label for="event-type"> מיקום אחרון ידוע</label>
                 <md-select name="event-type" id="event-type" v-model="form.eventType" md-dense :disabled="sending">
-                  <md-option></md-option>
-                  <md-option value="new york">new york</md-option>
-                  <md-option value="dalas">dalas</md-option>
-                  <md-option value="los angeles">los angeles</md-option>
-                  <md-option value="san fransico">san fransico</md-option>
+                  <md-option value="ניו יורק">ניו יורק</md-option>
+                  <md-option value="דאלאס">דאלאס</md-option>
+                  <md-option value="לוס אנגלס">לוס אנגלס</md-option>
+                  <md-option value="סן פרנסיסקו">סן פרנסיסקו</md-option>
 
                 </md-select>
                 <span class="md-error">  חובה למלא את סוג האירוע</span>
@@ -68,6 +67,7 @@
                 <date-picker v-model="reportingTime" :class="getValidationClass('reportingTime')" type="datetime"></date-picker>
             </div>
           </div>
+          <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventName')">
                 <label for="event-name">שם האירוע</label>
@@ -76,8 +76,21 @@
                 <span class="md-error" v-else-if="!$v.form.eventName.minlength">Invalid last name</span>
               </md-field>
             </div>
-          
-          
+            <div class="md-layout-item md-small-size-100">
+            <md-field :class="getValidationClass('eventPlace')">
+                 <label for="event-place"> מיקום </label>
+                <md-select name="event-place" id="event-place" v-model="form.eventPlace" md-dense :disabled="sending">
+                  <md-option value="ברונקס">ברונקס</md-option>
+                  <md-option value="מנהטן">מנהטן</md-option>
+                  <md-option value="ברוקליין">ברוקליין</md-option>
+                  <md-option value="סטייטן איילנד">סטייטן איילנד</md-option>
+                  <md-option value="קווינס">קווינס</md-option>
+
+                </md-select>
+                <span class="md-error">  חובה למלא את סוג האירוע</span>
+              </md-field>
+            </div>
+            </div>
         </md-card-content>
 
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
@@ -117,7 +130,8 @@ import DatePicker from 'vue2-datepicker';
         severalWounded: null,
         email: null,
         reportsName: null,
-        eventName: null
+        eventName: null,
+        eventPlace: null
       },
       eventTime: null,
       reportingTime: null,
@@ -145,6 +159,10 @@ import DatePicker from 'vue2-datepicker';
           required
         },
         eventTime: {
+          required,
+          
+        },
+        eventPlace: {
           required,
           
         },
@@ -181,6 +199,7 @@ import DatePicker from 'vue2-datepicker';
         this.form.eventType = null
         this.form.reportsName = null
         this.form.eventName = null
+        this.form.eventPlace = null
       },
       saveUser () {
         this.sending = true
@@ -207,13 +226,13 @@ import DatePicker from 'vue2-datepicker';
            this.$v.form.severalWounded.$model != "" && 
            this.$v.form.eventType.$model != "" &&
            this.$v.form.reportsName.$model != "" && 
+           this.$v.form.eventPlace.$model != "" && 
            this.eventTime != "" && 
            this.reportingTime != "" &&
            this.eventName != ""){
            
         const dataToSend = {report:{criminal: this.$v.form.kidnappingName.$model,
          kidnapped : this.$v.form.whoKidnapping.$model ,
-          severalWounded:   this.$v.form.severalWounded.$model,
           last_place_known : this.$v.form.eventType.$model,
           event_type : 3,
            user_name: this.$v.form.reportsName.$model ,
@@ -222,7 +241,9 @@ import DatePicker from 'vue2-datepicker';
            event_name: this.$v.form.eventName.$model,
            lat: this.selectedPoint.lat,
            lon: this.selectedPoint.lng,
+           region: this.$v.form.eventPlace.$model,
         }};
+        console.log(dataToSend)
           
   axios.post("http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports", dataToSend)
     .then(response => this.email = response.data.id);

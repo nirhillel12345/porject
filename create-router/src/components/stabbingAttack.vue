@@ -61,7 +61,6 @@
                   md-dense
                   :disabled="sending"
                 >
-                  <md-option></md-option>
                   <md-option value="ירי">אזרחים</md-option>
                   <md-option value="דקירה">כוחותינו</md-option>
                   <md-option value="חטיפה">אויב</md-option>
@@ -104,6 +103,8 @@
               ></date-picker>
             </div>
           </div>
+            <div class="md-layout md-gutter">
+
           <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventName')">
                 <label for="event-name">שם האירוע</label>
@@ -111,6 +112,21 @@
                 <span class="md-error" v-if="!$v.form.eventName.required">חובה למלא את שם האירוע</span>
                 <span class="md-error" v-else-if="!$v.form.eventName.minlength">Invalid last name</span>
               </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('eventPlace')">
+                 <label for="event-place"> מיקום </label>
+                <md-select name="event-place" id="event-place" v-model="form.eventPlace" md-dense :disabled="sending">
+                  <md-option value="ברונקס">ברונקס</md-option>
+                  <md-option value="מנהטן">מנהטן</md-option>
+                  <md-option value="ברוקליין">ברוקליין</md-option>
+                  <md-option value="סטייטן איילנד">סטייטן איילנד</md-option>
+                  <md-option value="קווינס">קווינס</md-option>
+
+                </md-select>
+                <span class="md-error">  חובה למלא את סוג האירוע</span>
+              </md-field>
+            </div>
             </div>
         </md-card-content>
 
@@ -167,7 +183,8 @@ props: ["selectedPoint"],
     lastUser: null,
     lat: null,
     lon: null,
-    eventName: null
+    eventName: null,
+    eventPlace: null,
   }),
   validations: {
     form: {
@@ -186,6 +203,9 @@ props: ["selectedPoint"],
         required
       },
       reportsName: {
+        required
+      },
+      eventPlace: {
         required
       },
       reportingTime: {
@@ -211,9 +231,10 @@ props: ["selectedPoint"],
       this.$v.$reset();
       this.form.stabbingName = null;
       this.form.gunType = null;
-this.form.eventName = null;
+      this.form.eventName = null;
       this.form.eventType = null;
       this.form.reportsName = null;
+      this.form.eventPlace = null;
     },
     saveUser() {
       this.sending = true;
@@ -240,6 +261,7 @@ this.form.eventName = null;
         this.$v.form.gunType.$model != "" &&
         this.$v.form.eventType.$model != "" &&
         this.$v.form.reportsName.$model != "" &&
+        this.$v.form.eventPlace.$model != "" &&
         this.eventTime != "" &&
         this.reportingTime != "" &&
         this.$v.form.eventName.$model != ""
@@ -257,9 +279,10 @@ this.form.eventName = null;
             event_name: this.$v.form.eventName.$model,
             lat: this.selectedPoint.lat,
             lon: this.selectedPoint.lng,
+            region: this.$v.form.eventPlace.$model,
           }
         };
-
+console.log(dataToSend)
         axios
           .post("http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports", dataToSend)
           .then(response => (this.email = response.data.id));
