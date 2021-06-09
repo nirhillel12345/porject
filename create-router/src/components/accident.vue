@@ -10,7 +10,7 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('offensiveName')">
-                <label for="offensive-name">שם הפוגע</label>
+                <label for="offensive-name" style="position:absolute; right:0" >שם הפוגע</label>
                 <md-input name="offensive-name" id="offensive-name" autocomplete="given-name" v-model="form.offensiveName" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.offensiveName.required">חובה למלא את שם הפוגע </span>
                 <span class="md-error" v-else-if="!$v.form.offensiveName.minlength">Invalid first name</span>
@@ -19,7 +19,7 @@
 
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('injuredName')">
-                <label for="injured-name">שם הנפגע</label>
+                <label for="injured-name" style="position:absolute; right:0" >שם הנפגע</label>
                 <md-input name="injured-name" id="injured-name" autocomplete="family-name" v-model="form.injuredName" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.injuredName.required">חובה למלא את שם הנפגע</span>
                 <span class="md-error" v-else-if="!$v.form.injuredName.minlength">Invalid last name</span>
@@ -33,7 +33,7 @@
             <div class="md-layout-item md-small-size-100" style="margin-left: 1.5vh">
               <md-field :class="getValidationClass('reportsName')" >
                 <md-input name="reports-name" id="reports-name" autocomplete="given-name" v-model="form.reportsName" :disabled="sending" />
-                <label for="reports-name" > זהות המדווח</label>
+                <label for="reports-name" style="position:absolute; right:0" > זהות המדווח</label>
                 
               </md-field>
             </div>
@@ -42,7 +42,7 @@
           </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('severalWounded')">
-                <label for="several-wounded">מספר נפגעים</label>
+                <label for="several-wounded" style="position:absolute; right:0" >מספר נפגעים</label>
                 <md-input type="number" id="several-wounded" name="several-wounded" autocomplete="several-wounded" v-model="form.severalWounded" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.severalWounded.required">חובה למלא את מספר הנפגעים</span>
                 <span class="md-error" v-else-if="!$v.form.severalWounded.maxlength">Invalid severalWounded</span>
@@ -65,7 +65,7 @@
           <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventName')">
-                <label for="event-name">שם האירוע</label>
+                <label for="event-name" style="position:absolute; right:0" >שם האירוע</label>
                 <md-input name="event-name" id="event-name" autocomplete="family-name" v-model="form.eventName" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.eventName.required">חובה למלא את שם האירוע</span>
                 <span class="md-error" v-else-if="!$v.form.eventName.minlength">Invalid last name</span>
@@ -73,7 +73,7 @@
             </div>
           <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventPlace')">
-                 <label for="event-place"> מיקום </label>
+                 <label for="event-place" style="position:absolute; right:0" > מיקום </label>
                 <md-select name="event-place" id="event-place" v-model="form.eventPlace" md-dense :disabled="sending">
                   <md-option value="ברונקס">ברונקס</md-option>
                   <md-option value="מנהטן">מנהטן</md-option>

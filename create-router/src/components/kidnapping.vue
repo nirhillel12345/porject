@@ -10,7 +10,7 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('kidnappingName')">
-                <label for="kidnapping-name">מי החוטף </label>
+                <label for="kidnapping-name" style="position:absolute; right:0" >מי החוטף </label>
                 <md-input name="kidnapping-name" id="kidnapping-name" autocomplete="given-name" v-model="form.kidnappingName" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.kidnappingName.required">חובה למלא את שם הפוגע </span>
                 <span class="md-error" v-else-if="!$v.form.kidnappingName.minlength">Invalid first name</span>
@@ -19,7 +19,7 @@
 
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('whoKidnapping')">
-                <label for="who-kidnapping"> מי הנחטף</label>
+                <label for="who-kidnapping" style="position:absolute; right:0" > מי הנחטף</label>
                 <md-input name="who-kidnapping" id="who-kidnapping" autocomplete="family-name" v-model="form.whoKidnapping" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.whoKidnapping.required">חובה למלא את שם הנפגע</span>
                 <span class="md-error" v-else-if="!$v.form.whoKidnapping.minlength">Invalid last name</span>
@@ -30,7 +30,7 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventType')">
-                <label for="event-type"> מיקום אחרון ידוע</label>
+                <label for="event-type" style="position:absolute; right:0" > מיקום אחרון ידוע</label>
                 <md-select name="event-type" id="event-type" v-model="form.eventType" md-dense :disabled="sending">
                   <md-option value="ניו יורק">ניו יורק</md-option>
                   <md-option value="דאלאס">דאלאס</md-option>
@@ -46,7 +46,7 @@
             <div class="md-layout-item md-small-size-100 ">
               <md-field :class="getValidationClass('reportsName')" >
                 <md-input name="reports-name" id="reports-name" autocomplete="given-name" v-model="form.reportsName" :disabled="sending" />
-                <label for="reports-name" > זהות המדווח</label>
+                <label for="reports-name" style="position:absolute; right:0" > זהות המדווח</label>
                 
               </md-field>
             </div>
@@ -70,7 +70,7 @@
           <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventName')">
-                <label for="event-name">שם האירוע</label>
+                <label for="event-name" style="position:absolute; right:0" >שם האירוע</label>
                 <md-input name="event-name" id="event-name" autocomplete="family-name" v-model="form.eventName" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.eventName.required">חובה למלא את שם האירוע</span>
                 <span class="md-error" v-else-if="!$v.form.eventName.minlength">Invalid last name</span>
@@ -78,7 +78,7 @@
             </div>
             <div class="md-layout-item md-small-size-100">
             <md-field :class="getValidationClass('eventPlace')">
-                 <label for="event-place"> מיקום </label>
+                 <label for="event-place" style="position:absolute; right:0" > מיקום </label>
                 <md-select name="event-place" id="event-place" v-model="form.eventPlace" md-dense :disabled="sending">
                   <md-option value="ברונקס">ברונקס</md-option>
                   <md-option value="מנהטן">מנהטן</md-option>

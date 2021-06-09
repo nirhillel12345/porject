@@ -10,7 +10,7 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('stabbingName')">
-                <label for="stabbing-name">מי הדוקר </label>
+                <label for="stabbing-name" style="position:absolute; right:0" >מי הדוקר </label>
                 <md-input
                   name="stabbing-name"
                   id="stabbing-name"
@@ -32,7 +32,7 @@
 
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('gunType')">
-                <label for="gun-type">סוג הנשק </label>
+                <label for="gun-type" style="position:absolute; right:0" >סוג הנשק </label>
                 <md-input
                   name="gun-type"
                   id="gun-type"
@@ -53,7 +53,7 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventType')">
-                <label for="event-type">נפגעים</label>
+                <label for="event-type" style="position:absolute; right:0" >נפגעים</label>
                 <md-select
                   name="event-type"
                   id="event-type"
@@ -79,7 +79,7 @@
                     v-model="form.reportsName"
                     :disabled="sending"
                   />
-                  <label for="reports-name"> זהות המדווח</label>
+                  <label for="reports-name" style="position:absolute; right:0" > זהות המדווח</label>
                 </md-field>
               </div>
             </div>
@@ -107,7 +107,7 @@
 
           <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventName')">
-                <label for="event-name">שם האירוע</label>
+                <label for="event-name" style="position:absolute; right:0" >שם האירוע</label>
                 <md-input name="event-name" id="event-name" autocomplete="family-name" v-model="form.eventName" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.eventName.required">חובה למלא את שם האירוע</span>
                 <span class="md-error" v-else-if="!$v.form.eventName.minlength">Invalid last name</span>
@@ -115,7 +115,7 @@
             </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('eventPlace')">
-                 <label for="event-place"> מיקום </label>
+                 <label for="event-place" style="position:absolute; right:0" > מיקום </label>
                 <md-select name="event-place" id="event-place" v-model="form.eventPlace" md-dense :disabled="sending">
                   <md-option value="ברונקס">ברונקס</md-option>
                   <md-option value="מנהטן">מנהטן</md-option>
