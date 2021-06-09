@@ -1,47 +1,42 @@
+
 <template>
   <div class="map">
     <select class="dropdown" v-model="selected" @change="changeArea">
       <option disabled value="">אנא בחר איזור</option>
       <option v-for="area in areaList" :key="area.name">{{ area.name }}</option>
     </select>
-    <LMap :zoom="zoom" :center="center">
+    <LMap :zoom="zoom" :center="center" v-if="!this.isLoading" id="brainMap">
       <LTileLayer :url="url"></LTileLayer>
-      <l-marker :lat-lng="[40.731810,-73.936542]" @click="triggerDialog(0)">
-      </l-marker>
-      <LMarker :lat-lng="[40.730620,-73.934250]" @click="triggerDialog(1)">
-      </LMarker>
-      <LMarker :lat-lng="[40.730529,-73.935949]" @click="triggerDialog(2)">
-      </LMarker>
-
-      <md-dialog :md-active.sync="this.trigger">
+        <l-marker v-for="(report, index) in this.reports" :key="'report' + index" 
+          :lat-lng="[report.lat, report.lon]" @click="triggerReportsDialog(index)"></l-marker>
+    </LMap>
+    <md-dialog :md-active.sync="this.trigger">
         <div>
-          <div class="md-layout">
+          <div class="md-layout"> 
+            <div class="md-layout-item md-size-10"></div>
             <div class="md-layout-item">
               <div dir="rtl" class="md-headline"><b>פרטי אירוע</b></div>
               <div dir="rtl">
               <p class="ps-2"><b>סוג אירוע: </b>{{eventType()}}</p>
+              <p class="ps-2"><b>שם אירוע: </b>{{eventName()}}</p>
               <p class="ps-2"><b>זמן אירוע: </b>{{eventTime()}}</p>
               <p class="ps-2"><b>זמן דיווח: </b>{{reportTime()}}</p>
-              <p class="ps-2"><b>מזהה מדווח: </b>{{reporterId()}}</p>
-              <p class="ps-2"><b>איזור אירוע: </b>{{eventArea()}}</p>
+              <p class="ps-2"><b>שם מדווח: </b>{{reporterName()}}</p>
+              <p class="ps-2"><b>תיאור אירוע: </b>{{eventDescription()}}</p>
             </div>
           </div>
-            <div class="md-layout-item md-size-10"></div>
           </div>
           <div class="flex space-x-2">
-            <md-button class="md-accent" @click="closeDialog()"><b>סגור</b></md-button>
+            <md-button class="md-primary" @click="closeReportsDialog()"><b>סגור</b></md-button>
           </div>
       </div>
     </md-dialog>
-    </LMap>
   </div>
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
-import reports from "../../data/reports_json.json";
+import { LMap, LTileLayer, LMarker} from "vue2-leaflet";
 import { icon } from "leaflet";
-import VEasyDialog from 'v-easy-dialog';
 
 export default {
   name: "Map",
@@ -49,19 +44,19 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup,
-    VEasyDialog,
   },
   data() {
     return {
+      reports: null,
+      isLoading: true,
       trigger: false,
-      curEventIndex: 0,
+      curReportIndex: 0,
+      reportServerUrl: "http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports",
       url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
       zoom: 16,
       center: [40.73061, -73.935242],
       bounds: null,
       selected: "",
-      events: reports,
       areaList: [
         {
           name: "ברונקס",
@@ -92,29 +87,52 @@ export default {
         area => area.name === this.selected
       ).coordinates;
     },
-    triggerDialog(index) {
+    triggerReportsDialog(index) {
       this.trigger = true;
-      this.curEventIndex = index;
+      this.curReportIndex = index;
     },
-    closeDialog() {
+    closeReportsDialog() {
       this.trigger = false;
     },
+    eventName() {
+      return this.reports[this.curReportIndex].event_name;
+    },
+    eventDescription() {
+      return this.reports[this.curReportIndex].event_description;
+    },
     eventType() {
-      return this.events.reports[this.curEventIndex].ev_type;
+      return this.reports[this.curReportIndex].event_type;
     },
     eventTime() {
-      return this.events.reports[this.curEventIndex].ev_time;
+      let eventTime = this.reports[this.curReportIndex].event_time.toString();
+      eventTime = eventTime.replace("T", " ");
+      eventTime = eventTime.replace("Z", " ");      
+      return eventTime;
     },
     reportTime() {
-      return this.events.reports[this.curEventIndex].ev_report_time;
+      let reportTime = this.reports[this.curReportIndex].report_time.toString();
+      reportTime = reportTime.replace("T", " ");
+      reportTime = reportTime.replace("Z", " ");   
+      return reportTime;
     },
-    reporterId() {
-      return this.events.reports[this.curEventIndex].reporter_id;
+    reporterName() {
+      return this.reports[this.curReportIndex].user_name;
     },
-    eventArea() {
-      return this.events.reports[this.curEventIndex].ev_area;
-    }
-  }, 
+
+  },
+  mounted() {
+    const axios = require('axios');
+
+    let response = axios.get(this.reportServerUrl)
+    .then((response) => {
+      this.reports = response.data;
+      }).catch((error) => {
+      console.log(error);
+    }).finally(() => {
+      console.log(this.reports);
+      this.isLoading = false;
+    });
+  } 
 };
 </script>
 
@@ -127,5 +145,9 @@ export default {
     margin-bottom: 2vh;
     height: 4vh;
     width: 25vh;
+}
+
+.md-dialog {
+  z-index: 10000;
 }
 </style>

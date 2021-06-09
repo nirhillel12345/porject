@@ -264,4 +264,5 @@ import DatePicker from 'vue2-datepicker';
 .md-title{
   color: red;
 }
+
 </style>
