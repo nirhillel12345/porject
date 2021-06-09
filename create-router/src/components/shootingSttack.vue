@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <form v-if="getShowForm == true" novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
         <md-card-header>
           <div class="md-title">יצירת התראה</div>
@@ -144,6 +144,7 @@ import DatePicker from 'vue2-datepicker';
     lon: null,
     eventName: null,
     eventPlace: null,
+    showForm: true,
     }),
     validations: {
       form: {
@@ -179,6 +180,12 @@ import DatePicker from 'vue2-datepicker';
           required,
           
         }
+      }
+    },
+    computed:{
+      getShowForm()
+      {
+      return this.showForm;
       }
     },
     methods: {
@@ -221,15 +228,14 @@ import DatePicker from 'vue2-datepicker';
       },
      
        sendPostRequest() {
-        if(this.$v.form.shootingName.$model != "" &&
-           this.$v.form.gunType.$model !="" && 
-          this.$v.form.eventName.$model !="" && 
-           this.$v.form.eventType.$model != "" &&
-           this.$v.form.reportsName.$model != "" && 
-           this.$v.form.eventPlace.$model != "" && 
-           this.eventTime != "" && 
-           this.reportingTime != ""){
-           
+        if(this.$v.form.shootingName.$model !=null &&
+           this.$v.form.gunType.$model != null && 
+           this.$v.form.eventType.$model != null &&
+           this.$v.form.eventPlace.$model != null &&
+           this.$v.form.reportsName.$model != null && 
+           this.eventTime != null && 
+           this.reportingTime != null){
+           this.showForm = false;
         const dataToSend ={report: {criminal: this.$v.form.shootingName.$model,
          weapon_type: this.$v.form.gunType.$model ,
          event_type: 1,
@@ -242,7 +248,6 @@ import DatePicker from 'vue2-datepicker';
            lon: this.selectedPoint.lng,
            region: this.$v.form.eventPlace.$model,
         }};
-        console.log(dataToSend)
           
   axios.post("http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports", dataToSend)
     .then(response => this.email = response.data.id);

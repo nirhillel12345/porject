@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     emitSelectPoint(){
-      console.log("hillel")
+      
     },
     showForm: function(event) {
       this.selectedPoint = event.latlng;
