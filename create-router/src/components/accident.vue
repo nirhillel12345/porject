@@ -104,6 +104,7 @@
 import axios from 'axios';
 import DatePicker from 'vue2-datepicker';
   import 'vue2-datepicker/index.css';
+  import eventBus from '../event-bus'
   import { validationMixin } from 'vuelidate'
   import {
     required,
@@ -134,6 +135,9 @@ import DatePicker from 'vue2-datepicker';
       sending: false,
       lastUser: null,
       lat: null,
+      reports:[],
+      reportsLoading: true,
+      reportServerUrl: "http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports",
     lon: null,
     showForm: true
     }),
@@ -246,10 +250,26 @@ import DatePicker from 'vue2-datepicker';
            region: this.$v.form.eventPlace.$model,
          } };
          
-          
+          console.log("before")
+          const axios = require('axios');
   axios.post("http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports", dataToSend)
     .then(response => this.email = response.data.id);
+    console.log("afther")
+    
+
+    let response = axios.get(this.reportServerUrl)
+    .then((response) => {
+      this.reports = response.data;
+      }).catch((error) => {
+      console.log(error);
+    }).finally(() => {
+      console.log("ddddd")
+      console.log(this.reports);
+      this.reportsLoading = false;
+    });
+    eventBus.$emit('changeReports',this.reports)  
            }
+           
            
 },
     }

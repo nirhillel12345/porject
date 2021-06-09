@@ -113,6 +113,7 @@
 import axios from 'axios';
 import DatePicker from 'vue2-datepicker';
   import 'vue2-datepicker/index.css';
+  import eventBus from '../event-bus'
   import { validationMixin } from 'vuelidate'
   import {
     required,
@@ -251,6 +252,21 @@ import DatePicker from 'vue2-datepicker';
           
   axios.post("http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports", dataToSend)
     .then(response => this.email = response.data.id);
+
+
+      const axios = require('axios');
+
+    let response = axios.get(this.reportServerUrl)
+    .then((response) => {
+      this.reports = response.data;
+      }).catch((error) => {
+      console.log(error);
+    }).finally(() => {
+      console.log(this.reports);
+      this.reportsLoading = false;
+    });
+    eventBus.$emit('changeReports',{reports:this.reports})
+
            }
            
 },

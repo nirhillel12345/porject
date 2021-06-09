@@ -74,6 +74,7 @@
 import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 import { icon } from "leaflet";
 import activityForm from "./form";
+import eventBus from '../event-bus'
 
 export default {
   name: "Map",
@@ -116,7 +117,10 @@ export default {
   },
   methods: {
     emitSelectPoint(){
-      
+      eventBus.$on('changeReports',(data)=>{
+       console.log("idssssss")
+      console.log(data) // {name:'foo'}
+    })
     },
     showForm: function(event) {
       this.selectedPoint = event.latlng;
@@ -249,6 +253,9 @@ export default {
         });
       }
     });
+
+
+       
 
   }
 };

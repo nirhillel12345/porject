@@ -64,7 +64,7 @@ export default {
         },
         {
           name: "מנהטן",
-          coordinates: [40.73061, -73.935242]
+          coordinates: [40.754932, -73.984016]
         },
         {
           name: "ברוקלין",
