@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <form  v-if="getShowForm == true" novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
         <md-card-header>
           <div class="md-title">יצירת התראה</div>
@@ -127,7 +127,7 @@ import DatePicker from 'vue2-datepicker';
         kidnappingName: null,
         whoKidnapping: null,
         eventType: null,
-        severalWounded: null,
+        
         email: null,
         reportsName: null,
         eventName: null,
@@ -139,7 +139,8 @@ import DatePicker from 'vue2-datepicker';
       sending: false,
       lastUser: null,
       lat: null,
-    lon: null
+    lon: null,
+    showForm: true
     }),
     validations: {
       form: {
@@ -151,10 +152,7 @@ import DatePicker from 'vue2-datepicker';
           required,
           minLength: minLength(1)
         },
-        severalWounded: {
-          required,
-          maxLength: maxLength(100)
-        },
+        
         eventType: {
           required
         },
@@ -181,6 +179,12 @@ import DatePicker from 'vue2-datepicker';
         }
       }
     },
+    computed:{
+      getShowForm()
+      {
+      return this.showForm;
+      }
+    },
     methods: {
       getValidationClass (fieldName) {
         const field = this.$v.form[fieldName]
@@ -195,7 +199,6 @@ import DatePicker from 'vue2-datepicker';
         this.$v.$reset()
         this.form.kidnappingName = null
         this.form.whoKidnapping = null
-        this.form.severalWounded  = null
         this.form.eventType = null
         this.form.reportsName = null
         this.form.eventName = null
@@ -221,16 +224,17 @@ import DatePicker from 'vue2-datepicker';
       },
      
        sendPostRequest() {
-        if(this.$v.form.kidnappingName.$model != "" &&
-           this.$v.form.whoKidnapping.$model !="" && 
-           this.$v.form.severalWounded.$model != "" && 
-           this.$v.form.eventType.$model != "" &&
-           this.$v.form.reportsName.$model != "" && 
-           this.$v.form.eventPlace.$model != "" && 
-           this.eventTime != "" && 
-           this.reportingTime != "" &&
-           this.eventName != ""){
-           
+
+        
+        if(this.$v.form.whoKidnapping.$model !=null &&
+           this.$v.form.kidnappingName.$model != null && 
+           this.$v.form.eventPlace.$model != null &&
+           this.$v.form.reportsName.$model != null && 
+           this.eventTime != null && 
+           this.reportingTime != null 
+           ){
+
+           this.showForm = false;
         const dataToSend = {report:{criminal: this.$v.form.kidnappingName.$model,
          kidnapped : this.$v.form.whoKidnapping.$model ,
           last_place_known : this.$v.form.eventType.$model,
@@ -243,7 +247,7 @@ import DatePicker from 'vue2-datepicker';
            lon: this.selectedPoint.lng,
            region: this.$v.form.eventPlace.$model,
         }};
-        console.log(dataToSend)
+       
           
   axios.post("http://siton-backend-securityapp3.apps.openforce.openforce.biz/reports", dataToSend)
     .then(response => this.email = response.data.id);
