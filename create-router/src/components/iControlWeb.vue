@@ -38,8 +38,10 @@
         </div>
       </div>
     </md-dialog>
-    <md-dialog :md-active.sync="dialog" width="500" class="addReportDialog">
-      <activityForm @confirmActivity="dialog = false" />
+    <md-dialog :md-active.sync="dialog"    class="addReportDialog ">
+        
+        <activityForm  v-bind:selectedPoint="selectedPoint" @confirmActivity="dialog = false" />
+        
     </md-dialog>
   </div>
 </template>
@@ -99,6 +101,9 @@ export default {
     };
   },
   methods: {
+    emitSelectPoint(){
+      console.log("hillel")
+    },
     showForm: function(event) {
       this.selectedPoint = event.latlng;
       this.dialog = true;
@@ -137,7 +142,6 @@ export default {
   z-index: 100;
 }
 .dropdown {
-  z-index: 5100;
   height: 4vh;
   width: 25vh;
 }
