@@ -119,7 +119,7 @@
                 <md-select name="event-place" id="event-place" v-model="form.eventPlace" md-dense :disabled="sending">
                   <md-option value="ברונקס">ברונקס</md-option>
                   <md-option value="מנהטן">מנהטן</md-option>
-                  <md-option value="ברוקליין">ברוקליין</md-option>
+                  <md-option value="ברוקלין">ברוקלין</md-option>
                   <md-option value="סטייטן איילנד">סטייטן איילנד</md-option>
                   <md-option value="קווינס">קווינס</md-option>
 
@@ -272,7 +272,7 @@ props: ["selectedPoint"],
            this.eventTime != null && 
            this.reportingTime != null){
         this.showForm = false;
-        location.reload();
+        // location.reload();
         const dataToSend = {
           report: {
             criminal: this.$v.form.stabbingName.$model,
