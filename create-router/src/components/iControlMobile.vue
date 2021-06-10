@@ -2,8 +2,18 @@
   <div class="map">
     <LMap :zoom="zoom" :center="center" v-if="!this.isLoading">
       <LTileLayer :url="url"></LTileLayer>
-        <l-marker v-for="(report, index) in this.reports" :key="'report' + index" 
-            :lat-lng="[report.lat, report.lon]" @click="triggerReportsDialog(index)"></l-marker>
+        <l-marker v-for="(shooting, index) in this.shootings" :key="'shooting' + index" 
+          :lat-lng="[shooting.lat, shooting.lon]" @click="triggerReportsDialog(shooting)" :icon="ShootingIcon"></l-marker>
+
+        <l-marker v-for="(stabbing, index) in this.stabbings" :key="'stabbing' + index" 
+          :lat-lng="[stabbing.lat, stabbing.lon]" @click="triggerReportsDialog(stabbing)" :icon="StabbingIcon"></l-marker>
+
+        <l-marker v-for="(accident, index) in this.accidents" :key="'accident' + index" 
+          :lat-lng="[accident.lat, accident.lon]" @click="triggerReportsDialog(accident)" :icon="AccidentIcon"></l-marker>
+
+        <l-marker v-for="(kidnap, index) in this.kidnaps" :key="'kidnap' + index" 
+          :lat-lng="[kidnap.lat, kidnap.lon]" @click="triggerReportsDialog(kidnap)" :icon="KidnappingIcon"></l-marker>
+
         <l-marker v-for="(activity, index) in this.activities" :key="'activity' + index" 
           :lat-lng="[activity.lat, activity.lon]" @click="triggerActivitiesDialog(index)"></l-marker>
     </LMap>
@@ -69,6 +79,10 @@ export default {
   data() {
     return {
       reports: null,
+      stabbings: null,
+      kidnaps: null,
+      accidents: null,
+      shootings: null,
       activities: null,
       activitiesLoading: true,
       reportsLoading: true,
@@ -84,8 +98,29 @@ export default {
       center: [40.73061, -73.935242],
       bounds: null,
       selected: "",
-      icon: L.icon({
+      ShootingIcon: L.icon({
         iconUrl: require("../assets/hitmark.png"),
+        iconSize:     [45, 45], // size of the icon
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      }),
+      StabbingIcon: L.icon({
+        iconUrl: require("../assets/knife.png"),
+        iconSize:     [45, 45], // size of the icon
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      }),
+      AccidentIcon: L.icon({
+        iconUrl: require("../assets/warning.png"),
+        iconSize:     [45, 45], // size of the icon
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      }),
+      KidnappingIcon: L.icon({
+        iconUrl: require("../assets/running.png"),
         iconSize:     [45, 45], // size of the icon
         iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
         shadowAnchor: [4, 62],  // the same for the shadow
@@ -94,9 +129,9 @@ export default {
     };
   },
   methods: {
-triggerReportsDialog(index) {
+    triggerReportsDialog(curReport) {
       this.reportsTrigger = true;
-      this.curReportIndex = index;
+      this.curReportIndex = this.reports.findIndex((report => report === curReport));
     },
     closeReportsDialog() {
       this.reportsTrigger = false;
@@ -118,9 +153,12 @@ triggerReportsDialog(index) {
       return this.reports[this.curReportIndex].event_type;
     },
     eventTime() {
-      let eventTime = this.reports[this.curReportIndex].event_time.toString();
-      eventTime = eventTime.replace("T", " ");
-      eventTime = eventTime.replace("Z", " ");      
+      let eventTime = this.reports[this.curReportIndex].event_time;
+      if(this.reports[this.curReportIndex].event_time !== null) {
+        eventTime = eventTime.toString();
+        eventTime = eventTime.replace("T", " ");
+        eventTime = eventTime.replace("Z", " ");      
+      }
       return eventTime;
     },
     reportTime() {
@@ -172,6 +210,10 @@ triggerReportsDialog(index) {
     let response = axios.get(this.reportServerUrl)
     .then((response) => {
       this.reports = response.data;
+      this.kidnaps = response.data.filter((report) => report.event_type === "חטיפה");
+      this.stabbings = response.data.filter((report) => report.event_type === "דקירה");
+      this.accidents = response.data.filter((report) => report.event_type === "תאונה");
+      this.shootings = response.data.filter((report) => report.event_type === "ירי");
       }).catch((error) => {
       console.log(error);
     }).finally(() => {
