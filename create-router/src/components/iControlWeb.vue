@@ -5,7 +5,7 @@
       <option value="reports">דיווחים</option>
       <option value="activities">פעילויות</option>
     </select>
-    <LMap :zoom="zoom" :center="center" @click="showForm" v-if="!this.isLoading" >
+    <LMap :zoom="zoom" :center="center" @click="showForm" v-if="!this.isLoading" class="showMap">
       <LTileLayer :url="url"></LTileLayer>
       <div v-if="this.showReports">
         <l-marker v-for="(report, index) in this.reports" :key="'report' + index" 
@@ -282,5 +282,8 @@ export default {
 
 .md-dialog {
   z-index: 600;
+}
+.showMap{
+  z-index: 1;
 }
 </style>

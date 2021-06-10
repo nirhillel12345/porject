@@ -236,6 +236,8 @@ import DatePicker from 'vue2-datepicker';
            ){
 
            this.showForm = false;
+           location.reload();
+
         const dataToSend = {report:{criminal: this.$v.form.kidnappingName.$model,
          kidnapped : this.$v.form.whoKidnapping.$model ,
           last_place_known : this.$v.form.eventType.$model,

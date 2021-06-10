@@ -237,6 +237,7 @@ import DatePicker from 'vue2-datepicker';
            this.eventTime != null && 
            this.reportingTime != null){
            this.showForm = false;
+           location.reload();
         const dataToSend ={report: {criminal: this.$v.form.shootingName.$model,
          weapon_type: this.$v.form.gunType.$model ,
          event_type: 1,

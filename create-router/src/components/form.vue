@@ -111,7 +111,6 @@ import DatePicker from 'vue2-datepicker';
       },
       clickedContinue(){
           this.switch = true;
-          location.reload();
       }
      
     },

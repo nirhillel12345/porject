@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form v-if="getShowForm == true"novalidate class="md-layout" @submit.prevent="validateUser">
+    <form v-if="getShowForm == true" novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
         <md-card-header>
           <div class="md-title">יצירת התראה</div>
@@ -235,6 +235,7 @@ import DatePicker from 'vue2-datepicker';
            this.reportingTime != null )
            {
              this.showForm = false;
+              location.reload();
              
         const dataToSend = {
             report: {criminal: this.$v.form.offensiveName.$model,

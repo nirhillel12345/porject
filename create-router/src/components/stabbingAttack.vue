@@ -272,6 +272,7 @@ props: ["selectedPoint"],
            this.eventTime != null && 
            this.reportingTime != null){
         this.showForm = false;
+        location.reload();
         const dataToSend = {
           report: {
             criminal: this.$v.form.stabbingName.$model,
