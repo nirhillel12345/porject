@@ -274,14 +274,14 @@ export default {
 }
 .addReportDialog {
   direction: rtl;
-  z-index: 500;
+  z-index: 10;
 }
 .triggerDialog {
   z-index: 500;
 }
 
 .md-dialog {
-  z-index: 600;
+  z-index: 10;
 }
 .showMap{
   z-index: 1;
